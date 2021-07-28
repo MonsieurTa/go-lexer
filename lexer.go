@@ -18,6 +18,7 @@ type StateFn func(Lexer) StateFn
 
 type Token struct {
 	Type  TokenType
+	At    int
 	Value string
 }
 
@@ -59,7 +60,7 @@ func (l *lexer) run() {
 }
 
 func (l *lexer) Emit(t TokenType) {
-	l.tokens <- Token{t, l.input[l.start:l.pos]}
+	l.tokens <- Token{t, l.start, l.input[l.start:l.pos]}
 	l.start = l.pos
 }
 
@@ -104,6 +105,7 @@ func (l *lexer) AcceptRun(valid string) {
 func (l *lexer) Errorf(format string, args ...interface{}) StateFn {
 	l.tokens <- Token{
 		ErrorToken,
+		l.start,
 		fmt.Sprintf(format, args...),
 	}
 	return nil
