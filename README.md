@@ -1,2 +1,3 @@
 # go-lexer
-implementation of a basic lexer from Rob Pike talk https://www.youtube.com/watch?v=HxaD_trXwRE
+Implementation of a basic lexer from Rob Pike talk https://www.youtube.com/watch?v=HxaD_trXwRE
+Used https://github.com/bbuck/go-lexer as reference
