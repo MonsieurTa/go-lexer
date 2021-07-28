@@ -8,8 +8,7 @@ import (
 
 const (
 	EOFRune    rune      = -1
-	ErrorToken TokenType = -1
-	EmptyToken TokenType = 0
+	ErrorToken TokenType = 0
 )
 
 type TokenType int
