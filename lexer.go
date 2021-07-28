@@ -14,7 +14,7 @@ const (
 
 type TokenType int
 
-type StateFn func(*lexer) StateFn
+type StateFn func(Lexer) StateFn
 
 type Token struct {
 	Type  TokenType
