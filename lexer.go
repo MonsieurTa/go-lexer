@@ -15,10 +15,20 @@ type TokenType int
 
 type StateFn func(Lexer) StateFn
 
-type Token struct {
-	Type  TokenType
-	At    int
-	Value string
+type token struct {
+	typ TokenType
+	at  int
+	val string
+}
+
+func (t token) Type() TokenType {
+	return t.typ
+}
+func (t token) At() int {
+	return t.at
+}
+func (t token) Value() string {
+	return t.val
 }
 
 // lexer holds the state of the scanner
@@ -59,7 +69,7 @@ func (l *lexer) run() {
 }
 
 func (l *lexer) Emit(t TokenType) {
-	l.tokens <- Token{t, l.start, l.input[l.start:l.pos]}
+	l.tokens <- token{t, l.start, l.input[l.start:l.pos]}
 	l.start = l.pos
 }
 
@@ -102,7 +112,7 @@ func (l *lexer) AcceptRun(valid string) {
 }
 
 func (l *lexer) Errorf(format string, args ...interface{}) StateFn {
-	l.tokens <- Token{
+	l.tokens <- token{
 		ErrorToken,
 		l.start,
 		fmt.Sprintf(format, args...),

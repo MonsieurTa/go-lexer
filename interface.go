@@ -11,3 +11,9 @@ type Lexer interface {
 	AcceptRun(valid string)
 	Errorf(format string, args ...interface{}) StateFn
 }
+
+type Token interface {
+	Type() TokenType
+	At() int
+	Value() string
+}
