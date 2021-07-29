@@ -1,7 +1,8 @@
 package lexer
 
 type Lexer interface {
-	Start() chan Token
+	NextToken() (Token, bool)
+	Start()
 	Emit(t TokenType)
 	Next() (r rune)
 	Peek() (r rune)

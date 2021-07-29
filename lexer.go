@@ -50,7 +50,7 @@ func New(name, s string, startState StateFn) Lexer {
 	}
 }
 
-func (l *lexer) Start() chan Token {
+func (l *lexer) Start() {
 	buffSize := len(l.input) / 2
 	if buffSize == 0 {
 		buffSize = 1
@@ -58,7 +58,6 @@ func (l *lexer) Start() chan Token {
 	l.tokens = make(chan Token, buffSize)
 
 	go l.run()
-	return l.tokens
 }
 
 func (l *lexer) run() {
@@ -118,4 +117,11 @@ func (l *lexer) Errorf(format string, args ...interface{}) StateFn {
 		fmt.Sprintf(format, args...),
 	}
 	return nil
+}
+
+func (l *lexer) NextToken() (Token, bool) {
+	if t, ok := <-l.tokens; ok {
+		return t, false
+	}
+	return nil, true
 }
